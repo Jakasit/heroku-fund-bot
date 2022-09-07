@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>ยืนยันตัวตน</title>
+</head>
+<body>
+<form action="/oknewuser" method="POST" >
+        <input id="userIdinput" type="hidden" name="userId">
+        <input id="displayNameinput" type="hidden" name="displayName">
+      <div class="card">
+        <div class="card-header">
+          NEW USER
+        </div>
+        <ul class="list-group list-group-flush">
+            <input id="userId" type="hidden">
+            <li class="list-group-item">
+               <h5 id="displayName"></h5>
+            </li>
+            <li class="list-group-item">
+                <label>รหัสพนักงาน กฟภ.</label>
+                <input type="text"  name="idpea" style="text-align:right" required>
+            </li>
+            <li class="list-group-item">
+                <label>วันเดือนปีเกิด</label>
+                <input type="date"  name="birthday" required>
+            </li>
+            <li class="list-group-item">
+              <button type="submit" class="btn btn-primary">CLICK</button>
+            </li>
+        </ul>
+      </div>
+
+      </form>
+<script src="https://static.line-scdn.net/liff/edge/versions/2.8.1/sdk.js"></script>
+  <script>
+    async function getUserProfile(){
+        const profile = await liff.getProfile();
+        document.getElementById("userId").append(profile.userId)
+        document.getElementById("displayName").append(profile.displayName)
+
+        document.getElementById("userIdinput").value = profile.userId
+        document.getElementById("displayNameinput").value = profile.displayName
+    }
+  async function main() {
+    liff.ready.then(() => {
+      if (liff.isLoggedIn()) {
+        getUserProfile()
+      } else {
+        liff.login()
+      }
+    })
+    await liff.init({ liffId: "1657363340-O5LxNo8m" })
+  }
+  main()
+  </script>
+</body>
+</html>
